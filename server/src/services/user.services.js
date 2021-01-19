@@ -18,5 +18,16 @@ export default {
   saveUser: (user) => {
     const { id, ...info } = user;
     return db.users.set(id, { ...info });
+  },
+
+  /**
+   * 
+   * @param {string} id 
+   */
+  getUserById: (id) => {
+    const user = db.users.get(id);
+    if (!user) return null;
+    const { password, ...info } = user;
+    return { ...info };
   }
 }
