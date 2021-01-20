@@ -1,4 +1,4 @@
-import { UserNotFound } from '../common/errors.js';
+import { NotFoundUserError } from '../common/errors.js';
 import userServices from '../services/user.services.js';
 import { getUserIdFromCredentials } from '../utils/jwtHelpers.js'
 
@@ -7,7 +7,7 @@ export default {
     const userId = getUserIdFromCredentials(req);
     
     const userInfo = userServices.getUserById(userId);
-    if (!userInfo) throw new UserNotFound();
+    if (!userInfo) throw new NotFoundUserError();
     
     const { password, ...info } = userInfo;
     return res.json({ ...info });

@@ -11,12 +11,14 @@ export class _ServerAPIError extends Error {
   }
 }
 
+// Common Errors
 export class MissingRequiredFieldError extends _ServerAPIError {
   constructor() {
     super({ status: 400, message: ErrMessages.MISSING_REQUIRED_FIELD });
   }
 }
 
+// User Errors
 export class InvalidCredentialError extends _ServerAPIError {
   constructor() {
     super({ status: 400, message: ErrMessages.INVALID_CREDENTIAL });
@@ -47,8 +49,15 @@ export class ExpiredTokenError extends _ServerAPIError {
   }
 }
 
-export class UserNotFound extends _ServerAPIError {
+export class NotFoundUserError extends _ServerAPIError {
   constructor() {
     super({ status: 404, message: ErrMessages.USER_NOT_FOUND });
+  }
+}
+
+// Note Errors
+export class NotFoundNoteError extends _ServerAPIError {
+  constructor() {
+    super({ status: 404, message: ErrMessages.NOTE_NOT_FOUND });
   }
 }
