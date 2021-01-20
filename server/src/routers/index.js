@@ -1,12 +1,9 @@
 import express from 'express';
 
-import userRoutes from './routes/user.routes.js';
+import apis from './apis/index.js';
 
 const router = express.Router();
 
-router.get(
-  userRoutes.GET_PROFILE
-);
+router.use(apis);
 
 export default router;
-

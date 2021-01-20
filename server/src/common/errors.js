@@ -25,6 +25,30 @@ export class InvalidCredentialError extends _ServerAPIError {
 
 export class UsedEmailError extends _ServerAPIError {
   constructor() {
-    super({ status: 409, message: ErrMessages.USED_EMAIL })
+    super({ status: 409, message: ErrMessages.USED_EMAIL });
+  }
+}
+
+export class UnauthorizedError extends _ServerAPIError {
+  constructor() {
+    super({ status: 401, message: ErrMessages.UNAUTHORIZED });
+  }
+}
+
+export class InvalidTokenError extends _ServerAPIError {
+  constructor() {
+    super({ status: 401, message: ErrMessages.INVALID_TOKEN });
+  }
+}
+
+export class ExpiredTokenError extends _ServerAPIError {
+  constructor() {
+    super({ status: 401, message: ErrMessages.EXPIRED_TOKEN, data: { isExpired: true } });
+  }
+}
+
+export class UserNotFound extends _ServerAPIError {
+  constructor() {
+    super({ status: 404, message: ErrMessages.USER_NOT_FOUND });
   }
 }

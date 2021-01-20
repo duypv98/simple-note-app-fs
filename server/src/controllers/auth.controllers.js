@@ -4,32 +4,37 @@ import asyncHandler from '../utils/asyncHandler.js'
 import { InvalidCredentialError, UsedEmailError } from '../common/errors.js';
 import userServices from '../services/user.services.js';
 import { compareHash, hashPassword } from '../utils/encryptionUtils.js';
-import { signToken } from '../utils/jwtHelpers.js';
+import { signUserToken } from '../utils/jwtHelpers.js';
+import { checkRequiredFields } from '../utils/validator.js';
 
 export default {
-  login: asyncHandler(async (req, res, next) => {
-    const { email, password } = req.body;
-    const user = userServices.getUserByEmail(email);
+  login: asyncHandler(async (req, res) => {
+    checkRequiredFields(req.body, ['email', 'password']);
 
+    const { email, password } = req.body;
     let isValidUser = true;
+    
+    const user = userServices.getUserByEmail(email);
     if (!user) isValidUser = false;
-    if (user) {
-      isValidUser = await compareHash(password, user.password);
-    }
+    else isValidUser = await compareHash(password, user.password);
 
     if (!isValidUser) throw new InvalidCredentialError();
-    const token = signToken({ id: user.id });
+    const token = signUserToken({ userId: user.id });
     return res.json({
       token
     });
   }),
 
-  signUp: asyncHandler(async (req, res, next) => {
+  signUp: asyncHandler(async (req, res) => {
+    checkRequiredFields(req.body, ['email', 'password']);
+
     const { email, full_name, password, phone } = req.body;
+
     const existedUser = userServices.getUserByEmail(email);
     if (existedUser) throw new UsedEmailError();
 
     const hashPwd = await hashPassword(password);
+
     userServices.saveUser({
       id: uuidv4(),
       email,
