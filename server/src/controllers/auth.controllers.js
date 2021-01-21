@@ -15,7 +15,7 @@ export default {
     let isValidUser = true;
     
     const user = userServices.getUserByEmail(email);
-    if (!user) isValidUser = false;
+    if (!user || !user.id) isValidUser = false;
     else isValidUser = await compareHash(password, user.password);
 
     if (!isValidUser) throw new InvalidCredentialError();

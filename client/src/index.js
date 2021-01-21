@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 
 import store from './redux/store';
-import LoginForm from './components/LoginForm';
+import App from './App';
 
 ReactDOM.render(
   <ReduxProvider store={store}>
-    <LoginForm />
+    <App />
   </ReduxProvider>,
   document.getElementById('root')
 );
