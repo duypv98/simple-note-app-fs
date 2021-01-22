@@ -8,6 +8,7 @@ export default {
   getUserByEmail: (email) => {
     const users = db.users.JSON();
     const [validUserId] = Object.keys(users).filter(id => users[id].email === email);
+    if (!validUserId) return null;
     return {
       id: validUserId,
       ...users[validUserId]
