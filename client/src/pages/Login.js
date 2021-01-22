@@ -1,17 +1,21 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { actLoginSuccess, actLoginFailure } from '../redux/actions/user.actions';
+import { actLoginSuccess } from '../redux/actions/user.actions';
+import { actToggleAlert } from '../redux/actions/modal.actions';
 import { post } from '../utils/request';
 import TextInput from '../components/Forms/TextInput';
 import AppTitle from '../components/AppTitle';
+import AlertModal from '../components/Modals/AlertModal';
 
 function handleLogin(email, password) {
   return post('/auth/login', { email, password });
 }
 
 const Login = () => {
+  const modalState = useSelector((state) => state.modal);
+  const currentLoginEmail = useSelector((state) => state.user.loginEmail);
   const inputRefs = useRef({});
   useEffect(() => {
     ['email', 'password'].forEach((field) => { inputRefs.current[field].value = ''; });
@@ -30,7 +34,11 @@ const Login = () => {
             inputRefs.current.password.value
           );
 
-          dispatch(error ? actLoginFailure() : actLoginSuccess(response.data.token));
+          if (error) {
+            dispatch(actToggleAlert(true, response.message));
+          } else {
+            dispatch(actLoginSuccess(response.data.token));
+          }
         }}
         >
           <TextInput
@@ -38,6 +46,7 @@ const Login = () => {
             label="Email"
             name="email"
             placeholder="admin@example.com"
+            value={currentLoginEmail}
             ref={(el) => { inputRefs.current.email = el; }}
           />
           <TextInput
@@ -60,6 +69,7 @@ const Login = () => {
             </div>
           </div>
         </form>
+        <AlertModal title="Error" message={modalState.message} isShow={modalState.isShowAlert} />
       </div>
     </>
   );

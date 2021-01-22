@@ -26,7 +26,6 @@ const request = async (_endpoint, method, body, token) => {
       data
     };
   } catch (e) {
-    console.log(e.response);
     return {
       error: true,
       message: e.response?.data?.message ?? e.message,

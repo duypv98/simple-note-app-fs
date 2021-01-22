@@ -1,11 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-// import { } from '../redux/actions/user.actions';
+import { actToggleAlert, actToggleRedirect } from '../redux/actions/modal.actions';
+import { actSetLoginEmail } from '../redux/actions/user.actions';
 import { post } from '../utils/request';
 import TextInput from '../components/Forms/TextInput';
 import AppTitle from '../components/AppTitle';
+import AlertModal from '../components/Modals/AlertModal';
+import RedirectModal from '../components/Modals/RedirectModal';
 
 const fields = [
   {
@@ -27,9 +30,9 @@ const fields = [
 
 function handleSignUp(currentInputValues) {
   const reqBody = {};
-  if (currentInputValues.password.value === currentInputValues.password.confirm) {
+  if (currentInputValues.password.value === currentInputValues.password_confirm.value) {
     fields.forEach((field) => {
-      Object.assign(reqBody, { [field.name]: currentInputValues[field].value });
+      Object.assign(reqBody, { [field.name]: currentInputValues[field.name].value });
     });
     return post('/auth/sign-up', reqBody);
   }
@@ -40,7 +43,8 @@ function handleSignUp(currentInputValues) {
 }
 
 const SignUp = () => {
-  const history = useHistory();
+  const modalState = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
   const inputRefs = useRef({});
   useEffect(() => {
     fields.forEach((field) => { inputRefs.current[field.name].value = ''; });
@@ -54,10 +58,10 @@ const SignUp = () => {
           e.preventDefault();
           const { error, ...response } = await handleSignUp(inputRefs.current);
           if (error) {
-            console.log(response.message);
+            dispatch(actToggleAlert(true, response.message));
           } else {
-            // Raise modal
-            history.push('/login');
+            dispatch(actSetLoginEmail(inputRefs.current.email.value));
+            dispatch(actToggleRedirect(true));
           }
         }}
         >
@@ -85,6 +89,8 @@ const SignUp = () => {
             </div>
           </div>
         </form>
+        <AlertModal title="Error" message={modalState.message} isShow={modalState.isShowAlert} />
+        <RedirectModal title="Success" message="Sign up successful! Click OK to continue" isShow={modalState.isShowRedirect} redirectPath="/login" />
       </div>
     </>
   );

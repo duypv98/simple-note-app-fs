@@ -9,3 +9,8 @@ export const actLoginFailure = () => ({
   type: userActions.LOGIN_FAILURE,
   payload: {}
 });
+
+export const actSetLoginEmail = (email) => ({
+  type: userActions.SET_LOGIN_EMAIL,
+  payload: { email }
+});
