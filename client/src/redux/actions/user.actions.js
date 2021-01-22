@@ -5,12 +5,7 @@ export const actLoginSuccess = (token) => ({
   payload: { token }
 });
 
-export const actLoginFailure = () => ({
-  type: userActions.LOGIN_FAILURE,
+export const actLogout = () => ({
+  type: userActions.LOGOUT,
   payload: {}
-});
-
-export const actSetLoginEmail = (email) => ({
-  type: userActions.SET_LOGIN_EMAIL,
-  payload: { email }
 });

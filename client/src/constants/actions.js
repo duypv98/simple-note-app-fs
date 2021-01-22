@@ -1,7 +1,6 @@
 export const userActions = {
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_FAILURE: 'LOGIN_FAILURE',
-  SET_LOGIN_EMAIL: 'SET_LOGIN_EMAIL'
+  LOGOUT: 'LOGOUT',
 };
 
 export const noteActions = {

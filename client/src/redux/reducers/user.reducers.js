@@ -14,19 +14,11 @@ export default (state = inititalState, action) => {
       };
     }
 
-    case userActions.LOGIN_FAILURE: {
+    case userActions.LOGOUT: {
       localStorage.removeItem('token');
       return {
         ...state,
         isLoggedIn: false
-      };
-    }
-
-    case userActions.SET_LOGIN_EMAIL: {
-      console.log(action);
-      return {
-        ...state,
-        loginEmail: action.payload.email
       };
     }
 

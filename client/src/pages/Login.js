@@ -15,7 +15,6 @@ function handleLogin(email, password) {
 
 const Login = () => {
   const modalState = useSelector((state) => state.modal);
-  const currentLoginEmail = useSelector((state) => state.user.loginEmail);
   const inputRefs = useRef({});
   useEffect(() => {
     ['email', 'password'].forEach((field) => { inputRefs.current[field].value = ''; });
@@ -46,7 +45,6 @@ const Login = () => {
             label="Email"
             name="email"
             placeholder="admin@example.com"
-            value={currentLoginEmail}
             ref={(el) => { inputRefs.current.email = el; }}
           />
           <TextInput

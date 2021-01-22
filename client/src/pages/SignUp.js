@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { actToggleAlert, actToggleRedirect } from '../redux/actions/modal.actions';
-import { actSetLoginEmail } from '../redux/actions/user.actions';
 import { post } from '../utils/request';
 import TextInput from '../components/Forms/TextInput';
 import AppTitle from '../components/AppTitle';
@@ -60,7 +59,6 @@ const SignUp = () => {
           if (error) {
             dispatch(actToggleAlert(true, response.message));
           } else {
-            dispatch(actSetLoginEmail(inputRefs.current.email.value));
             dispatch(actToggleRedirect(true));
           }
         }}

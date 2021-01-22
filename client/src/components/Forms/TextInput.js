@@ -18,7 +18,6 @@ const TextInput = forwardRef((props, ref) => {
         id={elementId}
         placeholder={placeholder}
         required={required ?? false}
-        defaultValue={props.value}
       />
     </div>
   );
@@ -30,7 +29,6 @@ TextInput.propTypes = {
   name: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
-  value: PropTypes.string
 };
 
 export default memo(TextInput);
