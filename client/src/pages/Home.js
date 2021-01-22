@@ -1,12 +1,17 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
+
+import TextInputBtn from '../components/Forms/TextInputBtn';
+import Note from '../components/Note';
 
 const Home = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const notes = useSelector((state) => state.notes);
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="row" style={{ marginTop: '3%' }}>
+      <TextInputBtn />
+      {Object.keys(notes).map((noteId) => (
+        <Note noteId={noteId} key={noteId} />
+      ))}
     </div>
   );
 };
