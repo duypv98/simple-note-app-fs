@@ -6,5 +6,6 @@ import { MissingRequiredFieldError } from '../common/errors.js';
  * @param {string[]} fields 
  */
 export function checkRequiredFields(dataSrc, fields) {
-  if (fields.some(field => !dataSrc[field])) throw new MissingRequiredFieldError();
+  const dataSrcKeys = Object.keys(dataSrc);
+  if (fields.some(field => !dataSrcKeys.includes(field))) throw new MissingRequiredFieldError();
 }

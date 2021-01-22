@@ -23,14 +23,17 @@ export default {
 
     noteServices.createNote(userId, noteId, req.body.content);
 
-    return res.json({ success: true });
+    return res.json({ noteId });
   },
 
   editNote: (req, res) => {
     checkRequiredFields(req.body, ['content']);
     checkRequiredFields(req.params, ['noteId']);
 
-    noteServices.editNote(req.params.noteId, req.body.content);
+    const { noteId } = req.params;
+    const { content } = req.body;
+
+    noteServices.editNote(noteId, content);
 
     return res.json({ success: true });
   },

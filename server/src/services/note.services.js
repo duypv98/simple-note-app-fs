@@ -38,7 +38,7 @@ export default {
     if (content !== newContent) {
       db.notes.delete(noteId);
       db.notes.set(noteId, {
-        content,
+        content: newContent,
         ...metadata
       });
     }
