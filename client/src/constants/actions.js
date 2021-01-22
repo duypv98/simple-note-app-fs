@@ -1,6 +1,7 @@
 export const userActions = {
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGOUT: 'LOGOUT',
+  LOAD_INFO: 'LOAD_INFO'
 };
 
 export const noteActions = {
@@ -8,6 +9,7 @@ export const noteActions = {
   REMOVE_NOTE: 'REMOVE_NOTE',
   EDIT_NOTE: 'EDIT_NOTE',
   SET_DRAFT: 'SET_DRAFT',
+  FETCH_NOTES: 'FETCH_NOTES'
 };
 
 export const modalActions = {

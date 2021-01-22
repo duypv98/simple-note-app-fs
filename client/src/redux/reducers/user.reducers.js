@@ -1,7 +1,14 @@
 import { userActions } from '../../constants/actions';
 
 const userToken = localStorage.getItem('token');
-const inititalState = userToken ? { isLoggedIn: true, loginEmail: '' } : { isLoggedIn: false, loginEmail: '' };
+const inititalState = {
+  isLoggedIn: !!userToken,
+  info: {
+    fullName: null,
+    email: null,
+    phone: null
+  }
+};
 
 export default (state = inititalState, action) => {
   switch (action.type) {
@@ -19,6 +26,18 @@ export default (state = inititalState, action) => {
       return {
         ...state,
         isLoggedIn: false
+      };
+    }
+
+    case userActions.LOAD_INFO: {
+      const { fullName, email, phone } = action.payload;
+      return {
+        ...state,
+        info: {
+          fullName,
+          email,
+          phone
+        }
       };
     }
 

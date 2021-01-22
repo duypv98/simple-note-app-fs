@@ -62,6 +62,14 @@ export default (state = inititalState, action) => {
       return state;
     }
 
+    case noteActions.FETCH_NOTES: {
+      const { notes } = action.payload;
+      return {
+        ...state,
+        ...notes
+      };
+    }
+
     default:
       return state;
   }

@@ -20,3 +20,8 @@ export const actSetDraft = (id, draft) => ({
   type: noteActions.SET_DRAFT,
   payload: { id, draft }
 });
+
+export const actFetchNotes = (notes) => ({
+  type: noteActions.FETCH_NOTES,
+  payload: { notes }
+});

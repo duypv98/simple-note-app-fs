@@ -9,3 +9,8 @@ export const actLogout = () => ({
   type: userActions.LOGOUT,
   payload: {}
 });
+
+export const actLoadInfo = (fullName, email, phone) => ({
+  type: userActions.LOAD_INFO,
+  payload: { fullName, email, phone }
+});
