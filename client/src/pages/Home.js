@@ -21,6 +21,7 @@ const Home = () => {
 
   const [isLoading, setLoading] = useState(true);
   useEffect(async () => {
+    if (!token) return;
     const allNotes = {};
     const [notesData, userData] = await Promise.all([
       get('/notes', null, token),
