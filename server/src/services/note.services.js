@@ -36,7 +36,6 @@ export default {
     if (!note) throw new NotFoundNoteError();
     const { content, ...metadata } = note;
     if (content !== newContent) {
-      db.notes.delete(noteId);
       db.notes.set(noteId, {
         content: newContent,
         ...metadata
