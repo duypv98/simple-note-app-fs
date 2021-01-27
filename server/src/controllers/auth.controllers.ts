@@ -1,14 +1,16 @@
+import { Response, NextFunction } from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import asyncHandler from 'express-async-handler';
 
-import asyncHandler from '../utils/asyncHandler.js'
-import { InvalidCredentialError, UsedEmailError } from '../common/errors.js';
-import userServices from '../services/user.services.js';
-import { compareHash, hashPassword } from '../utils/encryptionUtils.js';
-import { signUserToken } from '../utils/jwtHelpers.js';
-import { checkRequiredFields } from '../utils/validator.js';
+import { InvalidCredentialError, UsedEmailError } from '../common/errors';
+import userServices from '../services/user.services';
+import { compareHash, hashPassword } from '../utils/encryptionUtils';
+import { signUserToken } from '../utils/jwtHelpers';
+import { checkRequiredFields } from '../utils/validator';
+import User from '../models/User';
 
 export default {
-  login: asyncHandler(async (req, res) => {
+  login: asyncHandler(async (req: any, res: Response, next: NextFunction) => {
     checkRequiredFields(req.body, ['email', 'password']);
 
     const { email, password } = req.body;
@@ -25,7 +27,7 @@ export default {
     });
   }),
 
-  signUp: asyncHandler(async (req, res) => {
+  signUp: asyncHandler(async (req: any, res: Response, next: NextFunction) => {
     checkRequiredFields(req.body, ['email', 'password']);
 
     const { email, full_name, password, phone } = req.body;
@@ -35,14 +37,15 @@ export default {
 
     const hashPwd = await hashPassword(password);
 
-    userServices.saveUser({
+    const newUser = new User({
       id: uuidv4(),
       email,
-      full_name: full_name || null,
+      full_name,
       password: hashPwd,
-      phone: phone || null
+      phone
     });
 
+    userServices.saveUser(newUser);
     return res.json({ sucess: true });
   })
 }

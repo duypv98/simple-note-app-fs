@@ -1,9 +1,9 @@
-import express from 'express';
+import { Router } from 'express';
 
-import { verifyToken } from '../../middlewares/authMiddlewares.js'
-import noteControllers from '../../controllers/note.controllers.js';
+import { verifyToken } from '../../middlewares/authMiddlewares'
+import noteControllers from '../../controllers/note.controllers';
 
-const router = express.Router();
+const router: Router = Router();
 
 router.route('/')
   .get(

@@ -1,9 +1,18 @@
-import { ErrMessages } from './constants.js';
+import { ErrMessages } from './constants';
+
+type ServerAPIErrorData = {
+  status: number,
+  message: string,
+  data?: any
+}
 
 export class _ServerAPIError extends Error {
+  public status: number;
+  public data: any;
+
   constructor({
     status, message, data
-  }) {
+  }: ServerAPIErrorData) {
     super();
     this.status = status;
     this.message = message;

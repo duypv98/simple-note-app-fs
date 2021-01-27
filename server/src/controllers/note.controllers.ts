@@ -1,11 +1,14 @@
+
+import { Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getUserIdFromCredentials } from '../utils/jwtHelpers.js'
-import { checkRequiredFields } from '../utils/validator.js';
-import noteServices from '../services/note.services.js';
+import { getUserIdFromCredentials } from '../utils/jwtHelpers'
+import { checkRequiredFields } from '../utils/validator';
+import noteServices from '../services/note.services';
+import Note from '../models/Note';
 
 export default {
-  getNotes: (req, res) => {
+  getNotes: (req: any, res: Response) => {
     const userId = getUserIdFromCredentials(req);
 
     const notes = noteServices.getAllNotes(userId);
@@ -15,18 +18,18 @@ export default {
     });
   },
 
-  createNote: (req, res) => {
+  createNote: (req: any, res: Response) => {
     checkRequiredFields(req.body, ['content']);
     const userId = getUserIdFromCredentials(req);
 
-    const noteId = uuidv4();
+    const newNote = new Note({ id: uuidv4(), content: String(req.body.content) });
 
-    noteServices.createNote(userId, noteId, req.body.content);
+    noteServices.createNote(userId, newNote);
 
-    return res.json({ noteId });
+    return res.json({ noteId: newNote.id });
   },
 
-  editNote: (req, res) => {
+  editNote: (req: any, res: Response) => {
     checkRequiredFields(req.body, ['content']);
     checkRequiredFields(req.params, ['noteId']);
 
@@ -38,7 +41,7 @@ export default {
     return res.json({ success: true });
   },
 
-  deleteNote: (req, res) => {
+  deleteNote: (req: any, res: Response) => {
     checkRequiredFields(req.params, ['noteId']);
 
     noteServices.deleteNote(req.params.noteId);

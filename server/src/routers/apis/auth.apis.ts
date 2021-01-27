@@ -1,7 +1,7 @@
-import express from 'express';
-import authControllers from '../../controllers/auth.controllers.js';
+import { Router } from 'express';
+import authControllers from '../../controllers/auth.controllers';
 
-const router = express.Router();
+const router: Router = Router();
 
 router.post(
   '/login',
@@ -14,4 +14,3 @@ router.post(
 );
 
 export default router;
-

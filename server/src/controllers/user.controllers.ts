@@ -1,9 +1,11 @@
-import { NotFoundUserError } from '../common/errors.js';
-import userServices from '../services/user.services.js';
-import { getUserIdFromCredentials } from '../utils/jwtHelpers.js'
+import { Response } from 'express';
+
+import { NotFoundUserError } from '../common/errors';
+import userServices from '../services/user.services';
+import { getUserIdFromCredentials } from '../utils/jwtHelpers'
 
 export default {
-  getUserMe: (req, res) => {
+  getUserMe: (req: any, res: Response) => {
     const userId = getUserIdFromCredentials(req);
     
     const userInfo = userServices.getUserById(userId);

@@ -1,15 +1,16 @@
-import db from '../db/index.js';
-import { NotFoundNoteError } from '../common/errors.js'
+import db from '../db';
+import { NotFoundNoteError } from '../common/errors'
+import Note from '../models/Note';
 
 export default {
   /**
    * 
    * @param {string} userId
    */
-  getAllNotes: (userId) => {
+  getAllNotes: (userId: string) => {
     const notes = db.notes.JSON();
 
-    const userNoteIds = Object.keys(notes).filter(id => notes[id].userId === userId);
+    const userNoteIds = Object.keys(notes).filter((id: string) => notes[id].userId === userId);
     return userNoteIds.map(id => ({
       id,
       ...notes[id]
@@ -18,12 +19,11 @@ export default {
 
   /**
    * 
-   * @param {string} userId 
-   * @param {string} noteId 
-   * @param {string} content 
+   * @param {string} userId
+   * @param {Note} note 
    */
-  createNote: (userId, noteId, content) => {
-    return db.notes.set(noteId, { content, userId });
+  createNote: (userId: string, note: Note) => {
+    return db.notes.set(note.id, { content: note.content, userId });
   },
 
   /**
@@ -31,7 +31,7 @@ export default {
    * @param {string} noteId 
    * @param {string} newContent 
    */
-  editNote: (noteId, newContent) => {
+  editNote: (noteId: string, newContent: string) => {
     const note = db.notes.get(noteId);
     if (!note) throw new NotFoundNoteError();
     const { content, ...metadata } = note;
@@ -47,7 +47,7 @@ export default {
    * 
    * @param {string} noteId 
    */
-  deleteNote: (noteId) => {
+  deleteNote: (noteId: string) => {
     const isDeleted = db.notes.delete(noteId);
     if (!isDeleted) throw new NotFoundNoteError();
   }
