@@ -1,7 +1,7 @@
-import React, { forwardRef, memo } from 'react';
+import React, { forwardRef, memo, Props } from 'react';
 import PropTypes from 'prop-types';
 
-const TextInput = forwardRef((props, ref) => {
+const TextInput = forwardRef<HTMLInputElement, any>((props, ref) => {
   const {
     type, label, name, placeholder, required
   } = props;

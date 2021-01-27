@@ -1,7 +1,9 @@
 import { userActions } from '../../constants/actions';
+import { IAction } from '../types';
+import { IUserState } from '../types/stateTypes';
 
 const userToken = localStorage.getItem('token');
-const inititalState = {
+const inititalState: IUserState = {
   isLoggedIn: !!userToken,
   info: {
     fullName: null,
@@ -10,7 +12,7 @@ const inititalState = {
   }
 };
 
-export default (state = inititalState, action) => {
+export default (state = inititalState, action: IAction) => {
   switch (action.type) {
     case userActions.LOGIN_SUCCESS: {
       const { token } = action.payload;

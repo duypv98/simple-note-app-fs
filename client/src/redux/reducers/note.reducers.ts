@@ -1,8 +1,10 @@
 import { noteActions } from '../../constants/actions';
+import { IAction } from '../types';
+import { INoteState } from '../types/stateTypes';
 
-const inititalState = {};
+const inititalState: INoteState = {};
 
-export default (state = inititalState, action) => {
+export default (state = inititalState, action: IAction) => {
   switch (action.type) {
     case noteActions.ADD_NOTE: {
       const { id, content } = action.payload;

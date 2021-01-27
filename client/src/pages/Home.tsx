@@ -12,37 +12,44 @@ import { actLoadInfo } from '../redux/actions/user.actions';
 import { get } from '../utils/request';
 
 const Home = () => {
-  const modalState = useSelector((state) => state.modal);
+  const modalState = useSelector((state: any) => state.modal);
   const token = localStorage.getItem('token');
   const dispatch = useDispatch();
 
-  const notes = useSelector((state) => state.notes);
-  const userInfo = useSelector((state) => state.user.info);
+  const notes = useSelector((state: any) => state.notes);
+  const userInfo = useSelector((state: any) => state.user.info);
 
   const [isLoading, setLoading] = useState(true);
-  useEffect(async () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
     if (!token) return;
     const allNotes = {};
-    const [notesData, userData] = await Promise.all([
-      get('/notes', null, token),
-      get('/users/me', null, token)
-    ]);
-    if (notesData.error || userData.error) {
-      dispatch(actToggleAlert(true, 'Fetch error'));
-    } else {
-      const { full_name: fullName, email, phone } = userData.data;
-      notesData.data.notes.forEach((note) => {
-        Object.assign(allNotes, {
-          [note.id]: {
-            content: note.content,
-            draft: note.content
-          }
-        });
+
+    Promise
+      .all([
+        get('/notes', null, token),
+        get('/users/me', null, token)
+      ])
+      .then((data) => {
+        const [notesData, userData] = data;
+        if (notesData.error || userData.error) {
+          dispatch(actToggleAlert(true, 'Fetch error'));
+        } else {
+          const { full_name: fullName, email, phone } = userData.data;
+          notesData.data.notes.forEach((note: any) => {
+            Object.assign(allNotes, {
+              [note.id]: {
+                content: note.content,
+                draft: note.content
+              }
+            });
+          });
+          dispatch(actFetchNotes(allNotes));
+          dispatch(actLoadInfo(fullName, email, phone));
+        }
+        setLoading(false);
       });
-      dispatch(actFetchNotes(allNotes));
-      dispatch(actLoadInfo(fullName, email, phone));
-    }
-    setLoading(false);
   }, []);
   return (
     <>

@@ -9,16 +9,16 @@ import '../assets/css/note.css';
 import { actEditNote, actSetDraft, actRemoveNote } from '../redux/actions/note.actions';
 import { del, patch } from '../utils/request';
 
-const Note = (props) => {
+const Note = (props: any) => {
   const { noteId } = props;
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const dispatch = useDispatch();
 
-  const { content: noteContent, draft } = useSelector((state) => state.notes[noteId]);
+  const { content: noteContent, draft } = useSelector((state: any) => state.notes[noteId]);
 
   const changeContent = useCallback((e) => {
     dispatch(actEditNote(noteId, e.target.value));
-  });
+  }, []);
 
   const updateContent = useCallback(async () => {
     if (draft !== noteContent) {
@@ -30,7 +30,7 @@ const Note = (props) => {
         dispatch(actSetDraft(noteId, noteContent));
       }
     }
-  });
+  }, []);
 
   const removeNote = useCallback(async () => {
     const token = localStorage.getItem('token');
@@ -38,7 +38,7 @@ const Note = (props) => {
     if (!error) {
       dispatch(actRemoveNote(noteId));
     }
-  });
+  }, []);
 
   return (
     <div className="col-md-4" style={{ marginTop: 10 }}>

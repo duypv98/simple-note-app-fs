@@ -9,15 +9,15 @@ import TextInput from '../components/Forms/TextInput';
 import AppTitle from '../components/AppTitle';
 import AlertModal from '../components/Modals/AlertModal';
 
-function handleLogin(email, password) {
+function handleLogin(email: string, password: string) {
   return post('/auth/login', { email, password });
 }
 
 const Login = () => {
-  const modalState = useSelector((state) => state.modal);
-  const inputRefs = useRef({});
+  const modalState = useSelector((state: any) => state.modal);
+  const inputRefs = useRef<any>({});
   useEffect(() => {
-    ['email', 'password'].forEach((field) => { inputRefs.current[field].value = ''; });
+    ['email', 'password'].forEach((field: string) => { inputRefs.current[field].value = ''; });
   }, []);
 
   const dispatch = useDispatch();

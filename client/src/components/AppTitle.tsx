@@ -7,7 +7,7 @@ import FloatRightButton from './Navs/FloatRightBtn';
 
 const AppTitle = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isLoggedIn: boolean = useSelector((state: any) => state.user.isLoggedIn);
   const history = useHistory();
   const handleLogout = () => {
     dispatch(actLogout());

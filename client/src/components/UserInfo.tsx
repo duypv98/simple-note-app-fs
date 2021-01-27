@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-const UserInfo = (props) => {
+const UserInfo = (props: any) => {
   const { fullName, email, phone } = props;
   return (
     <div style={{ marginLeft: '1%' }}>

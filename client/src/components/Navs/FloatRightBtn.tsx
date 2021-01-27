@@ -1,9 +1,9 @@
 import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-const FloatRightButton = (props) => {
+const FloatRightButton = (props: any) => {
   const { value, onClick } = props;
-  const onClickHandler = useCallback(() => onClick());
+  const onClickHandler = useCallback(() => onClick(), []);
   return (
     <button type="button" className="btn btn-primary btn-lg float-right" onClick={onClickHandler}>
       {value}

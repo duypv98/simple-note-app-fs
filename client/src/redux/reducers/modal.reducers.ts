@@ -1,10 +1,12 @@
 import { modalActions } from '../../constants/actions';
+import { IAction } from '../types';
+import { IModalState } from '../types/stateTypes';
 
-const inititalState = {
+const inititalState: IModalState = {
   isShowAlert: false, message: '', isShowRedirect: false
 };
 
-export default (state = inititalState, action) => {
+export default (state = inititalState, action: IAction) => {
   switch (action.type) {
     case modalActions.TOGGLE: {
       const { isShow, message } = action.payload;

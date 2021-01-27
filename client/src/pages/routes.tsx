@@ -8,11 +8,13 @@ import Home from './Home';
 export const publicRoutes = [
   {
     path: '/login',
-    component: Login
+    component: Login,
+    exact: false
   },
   {
     path: '/sign-up',
-    component: SignUp
+    component: SignUp,
+    exact: false
   }
 ];
 

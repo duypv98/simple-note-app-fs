@@ -27,7 +27,7 @@ const fields = [
   }
 ];
 
-function handleSignUp(currentInputValues) {
+function handleSignUp(currentInputValues: any) {
   const reqBody = {};
   if (currentInputValues.password.value === currentInputValues.password_confirm.value) {
     fields.forEach((field) => {
@@ -42,9 +42,9 @@ function handleSignUp(currentInputValues) {
 }
 
 const SignUp = () => {
-  const modalState = useSelector((state) => state.modal);
+  const modalState = useSelector((state: any) => state.modal);
   const dispatch = useDispatch();
-  const inputRefs = useRef({});
+  const inputRefs = useRef<any>({});
   useEffect(() => {
     fields.forEach((field) => { inputRefs.current[field.name].value = ''; });
   }, []);

@@ -5,15 +5,16 @@ import { post } from '../../utils/request';
 import AlertModal from '../Modals/AlertModal';
 import { actAddNote } from '../../redux/actions/note.actions';
 import { actToggleAlert } from '../../redux/actions/modal.actions';
+import { IModalState } from '../../redux/types/stateTypes';
 
 const TextInputBtn = () => {
   const token = localStorage.getItem('token');
-  const modalState = useSelector((state) => state.modal);
+  const modalState: IModalState = useSelector((state: any) => state.modal);
   const dispatch = useDispatch();
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleBtnClick = useCallback(async () => {
-    const content = ref.current.value;
+    const content = ref.current?.value;
 
     const { error, ...response } = await post('/notes', { content }, token);
     if (error) {
@@ -21,9 +22,9 @@ const TextInputBtn = () => {
     } else {
       const { noteId } = response.data;
       dispatch(actAddNote(noteId, content));
-      ref.current.value = '';
+      ref.current?.value && (ref.current.value = '');
     }
-  });
+  }, []);
 
   return (
     <div className="col-md-12" style={{ marginBottom: 15 }}>

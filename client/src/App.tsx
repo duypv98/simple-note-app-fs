@@ -6,7 +6,7 @@ import Routes, { publicRoutes } from './pages/routes';
 import TopNav from './components/Navs/TopNav';
 
 const AppRoutes = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector((state: any) => state.user.isLoggedIn);
   const { pathname } = useLocation();
 
   const isForceEnterPublicRoute = isLoggedIn && publicRoutes

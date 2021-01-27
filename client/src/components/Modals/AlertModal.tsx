@@ -1,17 +1,12 @@
 import React, { memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
-import { actToggleRedirect } from '../../redux/actions/modal.actions';
+import { useDispatch } from 'react-redux';
+import { actToggleAlert } from '../../redux/actions/modal.actions';
 
-const RedirectModal = (props) => {
-  const history = useHistory();
+const AlertModal = (props: any) => {
   const dispatch = useDispatch();
-  const handleClose = useCallback(() => {
-    dispatch(actToggleRedirect(false));
-    history.push(props.redirectPath);
-  });
+  const handleClose = useCallback(() => dispatch(actToggleAlert(false)), []);
 
   return (
     <>
@@ -26,7 +21,7 @@ const RedirectModal = (props) => {
         <Modal.Body>{props.message}</Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
-            OK
+            Close
           </Button>
         </Modal.Footer>
       </Modal>
@@ -34,11 +29,10 @@ const RedirectModal = (props) => {
   );
 };
 
-RedirectModal.propTypes = {
+AlertModal.propTypes = {
   isShow: PropTypes.bool,
   title: PropTypes.string,
-  message: PropTypes.string,
-  redirectPath: PropTypes.string
+  message: PropTypes.string
 };
 
-export default memo(RedirectModal);
+export default memo(AlertModal);
