@@ -14,7 +14,7 @@ const AppRoutes = () => {
     .includes(pathname);
   const isForceEnterPrivateRoute = !isLoggedIn && pathname === '/';
 
-  let redirectPath;
+  let redirectPath: string = '';
   if (isForceEnterPublicRoute) redirectPath = '/';
   if (isForceEnterPrivateRoute) redirectPath = '/login';
 
