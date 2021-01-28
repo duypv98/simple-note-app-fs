@@ -15,29 +15,37 @@ const Note = (props: any) => {
   const dispatch = useDispatch();
 
   const { content: noteContent, draft } = useSelector((state: any) => state.notes[noteId]);
-
-  const changeContent = useCallback((e) => {
+  
+  
+  const changeContent = useCallback((e: any) => {
     dispatch(actEditNote(noteId, e.target.value));
   }, []);
-
-  const updateContent = useCallback(async () => {
+  
+  const updateContent = () => {
     if (draft !== noteContent) {
       const token = localStorage.getItem('token');
-      const { error } = await patch(`/notes/${noteId}`, { content: noteContent }, token);
-      if (error) {
-        dispatch(actEditNote(noteId, draft));
-      } else {
-        dispatch(actSetDraft(noteId, noteContent));
-      }
+      patch(`/notes/${noteId}`, { content: noteContent }, token)
+        .then((data) => {
+          console.log(data);
+          const { error } = data;
+          if (error) {
+            dispatch(actEditNote(noteId, draft));
+          } else {
+            dispatch(actSetDraft(noteId, noteContent));
+          }
+        })
     }
-  }, []);
+  };
 
-  const removeNote = useCallback(async () => {
+  const removeNote = useCallback(() => {
     const token = localStorage.getItem('token');
-    const { error } = await del(`/notes/${noteId}`, null, token);
-    if (!error) {
-      dispatch(actRemoveNote(noteId));
-    }
+    del(`/notes/${noteId}`, null, token)
+      .then((data) => {
+        const { error } = data;
+        if (!error) {
+          dispatch(actRemoveNote(noteId));
+        }
+      });
   }, []);
 
   return (
@@ -49,7 +57,7 @@ const Note = (props: any) => {
             style={{ height: 180, overflowY: 'scroll', width: '100%' }}
             value={noteContent}
             onChange={(e) => changeContent(e)}
-            onMouseLeave={async () => { await updateContent(); }}
+            onMouseLeave={() => updateContent()}
           />
         </div>
         <div className="card-footer">
