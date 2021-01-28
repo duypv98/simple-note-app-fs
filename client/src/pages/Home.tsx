@@ -20,7 +20,6 @@ const Home = () => {
   const userInfo = useSelector((state: any) => state.user.info);
 
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (!token) return;

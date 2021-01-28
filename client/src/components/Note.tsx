@@ -15,12 +15,11 @@ const Note = (props: any) => {
   const dispatch = useDispatch();
 
   const { content: noteContent, draft } = useSelector((state: any) => state.notes[noteId]);
-  
-  
+
   const changeContent = useCallback((e: any) => {
     dispatch(actEditNote(noteId, e.target.value));
   }, []);
-  
+
   const updateContent = () => {
     if (draft !== noteContent) {
       const token = localStorage.getItem('token');
@@ -33,7 +32,7 @@ const Note = (props: any) => {
           } else {
             dispatch(actSetDraft(noteId, noteContent));
           }
-        })
+        });
     }
   };
 

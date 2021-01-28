@@ -29,7 +29,7 @@ export default (state = inititalState, action: IAction) => {
           content
         }
       };
-      
+
       return {
         ...state,
         ...editNote
